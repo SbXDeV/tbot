@@ -3,8 +3,9 @@
 import telebot
 from telebot import types
 import random
-
-
+import time
+import sys
+import logging
 token = input("Введите токен: ")
 print("Бот начал работу: ")
 
@@ -52,14 +53,14 @@ def open_website(message):
 @bot.message_handler(commands=['insta'])
 def instagram(message):
 	markup = types.InlineKeyboardMarkup()
-	markup.add(types.InlineKeyboardButton("Перейти в Инстаграм", url="https://www.instagram.com/leylarelax_com/"))
+	markup.add(types.InlineKeyboardButton("Перейти в Инстаграм", url="https://www.instagram.com/leylarelax_com"))
 	bot.send_message(message.chat.id, "Нажмите на кнопку ниже и погрузитесь в мир разврата и похоти прямо сейчас", parse_mode='html', reply_markup=markup)
 
 
-@bot.message_handler(commands=['https://vk.com/sexkiev0'])
+@bot.message_handler(commands=['vk'])
 def vk(message):
 	markup = types.InlineKeyboardMarkup()
-	markup.add(types.InlineKeyboardButton("Посетить группу Вк", url="https://vk.com/prog_life"))
+	markup.add(types.InlineKeyboardButton("Посетить группу Вк", url="https://vk.com/sexkiev0"))
 	bot.send_message(message.chat.id, "Нажмите на кнопку ниже и погрузитесь в мир разврата и похоти прямо сейчас", parse_mode='html', reply_markup=markup)
 
 
@@ -120,9 +121,9 @@ def mess(message):
 		btn2 = types.KeyboardButton('Все модели')
 		btn3 = types.KeyboardButton("Вернуться")
 		markup.add(btn1, btn2, btn3)
-
 		final_message = "Отлично, эта девушка ищет себе мужчину, напишем ей?\n          <b>Имя:</b> " + random.choice(name) + "\n          <b>Обо мне:</b> " + random.choice(desc) + "\n          <b>Связь со мной:</b> " + "<a href=\"https://leylarelax.com\">Анкета</a>"
 		img = open(random.choice(photo), 'rb')
+		print(final_message)
 		bot.send_photo(message.chat.id, img)
 	#ГОРОДА
 	elif get_message_bot == "харьков":
@@ -130,8 +131,8 @@ def mess(message):
 		btn1 = types.KeyboardButton('Случайная модель')
 		btn2 = types.KeyboardButton('Все модели')
 		btn3 = types.KeyboardButton("Вернуться")
+		print(final_message)
 		markup.add(btn1, btn2, btn3)
-
 		final_message = "Отлично, эта девушка ищет себе мужчину, напишем ей?\n          <b>Имя:</b> " + random.choice(name) + "\n          <b>Обо мне:</b> " + random.choice(desc) + "\n          <b>Связь со мной:</b> " + "<a href=\"https://leylarelax.com\">Анкета</a>"
 		img = open(random.choice(photo), 'rb')
 		bot.send_photo(message.chat.id, img)
@@ -158,6 +159,11 @@ def mess(message):
 		markup.add(btn1, btn2, btn3, btn4)
 		final_message = "Так, так, так\nПостой, лучше нажми на одну из интерактивных кнопок ниже"
 	bot.send_message(message.chat.id, final_message, parse_mode='html', reply_markup=markup)
+while True:
+    try:
+      bot.polling(none_stop=True)
+    except: 
+      print('bolt')
+      logging.error('error: {}'.format(sys.exc_info()[0]))
+      time.sleep(5)
 
-
-bot.polling(none_stop=True)
